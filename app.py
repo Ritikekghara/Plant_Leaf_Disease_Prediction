@@ -1,8 +1,8 @@
-#Import necessary libraries
+# Import necessary libraries
 from flask import Flask, render_template, request
-
 import numpy as np
 import os
+from waitress import serve
 
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
@@ -55,18 +55,13 @@ def pred_tomato_dieas(tomato_plant):
   elif pred==9:
       return "Tomato - Two Spotted Spider Mite Disease", 'Tomato - Two-spotted_spider_mite.html'
 
-    
-
-# Create flask instance
 app = Flask(__name__)
 
-# render index.html page
 @app.route("/", methods=['GET', 'POST'])
 def home():
         return render_template('index.html')
     
  
-# get input image from client then predict class and render respective .html page for solution
 @app.route("/predict", methods = ['GET','POST'])
 def predict():
      if request.method == 'POST':
@@ -82,8 +77,6 @@ def predict():
               
         return render_template(output_page, pred_output = pred, user_image = file_path)
     
-# For local system & cloud
 if __name__ == "__main__":
-    app.run(debug=True) 
-    
-    
+    # app.run(debug=False)
+    serve(app, host='0.0.0.0', port=8080)

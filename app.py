@@ -69,7 +69,7 @@ def predict():
         filename = file.filename        
         print("@@ Input posted = ", filename)
         
-        file_path = os.path.join(r'C:\Users\RITIK\Desktop\Plant-Leaf-Disease-Prediction\static\upload', filename)
+        file_path = os.path.join('./static/upload', filename)
         file.save(file_path)
 
         print("@@ Predicting class......")
